@@ -1,0 +1,5 @@
+--colors
+--reporter-options junit_report_path=test-results/test-results.xml,junit_report_stack=1
+--timeout 10000
+--option value
+test/specs/**/*.js
