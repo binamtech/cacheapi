@@ -15,19 +15,19 @@ router.post('/cache', async (req, res, next) => {
     }
 });
 
-router.put('/cache/:id', async (req, res, next) => {
+router.put('/cache/:key', async (req, res, next) => {
     try {
         const {body: {data}} = req;
-        const result = await cacheController.update(req, res, req.params.id, data);
+        const result = await cacheController.update(req, res, req.params.key, data);
         sendSuccess(req, res, result);
     } catch (err) {
         next(err);
     }
 });
 
-router.get('/cache/:id', async (req, res, next) => {
+router.get('/cache/:key', async (req, res, next) => {
     try {
-        const result = await cacheController.read(req, res, req.params.id);
+        const result = await cacheController.read(req, res, req.params.key);
         sendSuccess(req, res, result);
     } catch (err) {
         next(err);
@@ -43,9 +43,9 @@ router.get('/caches', async (req, res, next) => {
     }
 });
 
-router.delete('/cache/:id', async (req, res, next) => {
+router.delete('/cache/:key', async (req, res, next) => {
     try {
-        const result = await cacheController.delete(req, res, req.params.id);
+        const result = await cacheController.remove(req, res, req.params.key);
         sendSuccess(req, res, result);
     } catch (err) {
         next(err);

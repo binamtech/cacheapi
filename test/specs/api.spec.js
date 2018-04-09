@@ -21,6 +21,8 @@ describe('API2 Tests', function() {
     let sandbox;
     let appevents;
     let api;
+    /*const cacheModel = require(buildPath + 'main/cache/cache.model');
+    let keyToRemove;*/
 
 
     before((done) => {
@@ -66,6 +68,53 @@ describe('API2 Tests', function() {
 
                 done();
             });
+    });
+
+    it("should create new cache entry", function (done) {
+        const key = 'testkey';
+        request(api).get(`/v1/cache/${key}`)
+            .expect(HTTP_CODES.SUCCESS)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                }
+
+                try {
+                    assert.equal(res.body.data.key, key);
+                } catch (err) {
+                    return done(err);
+                }
+
+                done();
+            });
+    });
+
+    it("should get all cache entries", function (done) {
+        const key = 'testkey';
+        request(api).get(`/v1/cache/${key}`)
+            .expect(HTTP_CODES.SUCCESS)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                }
+
+                request(api).get(`/v1/caches`)
+                    .expect(HTTP_CODES.SUCCESS)
+                    .end(function (err, res) {
+                        if (err) {
+                            return done(err);
+                        }
+
+                        try {
+                            assert.isAbove(res.body.data.length, 0, 'data should be an array and above 0');
+                        } catch (err) {
+                            return done(err);
+                        }
+
+                        done();
+                    });
+            });
+
     });
 
 });
